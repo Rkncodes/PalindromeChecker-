@@ -37,7 +37,7 @@ public class Main {
         resultLabel.setFont(new Font("Arial", Font.ITALIC, 14));
         panel.add(resultLabel, gbc);
 
-        // 7️⃣ --- UC6 BUTTON LOGIC ---
+        // 7️⃣ --- UC6 + UC7 BUTTON LOGIC ---
         checkButton.addActionListener(e -> {
             String original = inputField.getText().trim();
 
@@ -47,18 +47,18 @@ public class Main {
                 return;
             }
 
-            // UC6: Remove spaces/punctuation and ignore case
+            // UC6: Remove spaces/punctuation, ignore case
             String cleanInput = original.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
-
-            // Reverse string
             String reversed = new StringBuilder(cleanInput).reverse().toString();
 
-            // Compare
+            // UC7: Count characters
+            int length = original.length(); // length including spaces/punctuation
+
             if (cleanInput.equals(reversed)) {
-                resultLabel.setText("✅ SUCCESS: It's a Palindrome!");
+                resultLabel.setText("✅ Palindrome! Length: " + length);
                 resultLabel.setForeground(new Color(0, 128, 0)); // Green
             } else {
-                resultLabel.setText("❌ NOPE: Not a Palindrome.");
+                resultLabel.setText("❌ Not a palindrome. Length: " + length);
                 resultLabel.setForeground(Color.RED);
             }
         });
