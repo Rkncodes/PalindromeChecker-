@@ -5,7 +5,7 @@ public class Main {
     public static void main(String[] args) {
         // 1️⃣ Create main window
         JFrame frame = new JFrame("Palindrome Checker");
-        frame.setSize(500, 450);
+        frame.setSize(500, 500);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
 
@@ -17,7 +17,7 @@ public class Main {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.insets = new Insets(10, 0, 10, 0);
 
-        // 3️⃣ Title
+        // 3️⃣ Title label
         JLabel titleLabel = new JLabel("Palindrome Checker", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
         panel.add(titleLabel, gbc);
@@ -44,7 +44,38 @@ public class Main {
         scrollPane.setPreferredSize(new Dimension(400, 150));
         panel.add(scrollPane, gbc);
 
-        // 8️⃣ --- UC6 + UC7 + UC8 + UC9 BUTTON LOGIC ---
+        // 8️⃣ Theme toggle button (UC10)
+        JButton themeButton = new JButton("Toggle Theme");
+        themeButton.setPreferredSize(new Dimension(150, 40));
+        panel.add(themeButton, gbc);
+
+        // 9️⃣ Track theme state
+        final boolean[] darkTheme = {false};
+
+        themeButton.addActionListener(e -> {
+            darkTheme[0] = !darkTheme[0]; // toggle state
+            if (darkTheme[0]) {
+                panel.setBackground(Color.DARK_GRAY);
+                titleLabel.setForeground(Color.WHITE);
+                resultLabel.setForeground(Color.WHITE);
+                historyList.setBackground(Color.GRAY);
+                historyList.setForeground(Color.WHITE);
+                inputField.setBackground(Color.LIGHT_GRAY);
+                inputField.setForeground(Color.BLACK);
+            } else {
+                panel.setBackground(Color.WHITE);
+                titleLabel.setForeground(Color.BLACK);
+                resultLabel.setForeground(Color.BLACK);
+                historyList.setBackground(Color.WHITE);
+                historyList.setForeground(Color.BLACK);
+                inputField.setBackground(Color.WHITE);
+                inputField.setForeground(Color.BLACK);
+            }
+            panel.revalidate();
+            panel.repaint();
+        });
+
+        //  🔟 --- UC6 + UC7 + UC8 + UC9 BUTTON LOGIC ---
         checkButton.addActionListener(e -> {
             String original = inputField.getText().trim();
 
@@ -58,24 +89,24 @@ public class Main {
             String cleanInput = original.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
             String reversed = new StringBuilder(cleanInput).reverse().toString();
 
-            // UC7: character count
+            // UC7: count characters
             int length = original.length();
 
             boolean isPalindrome = cleanInput.equals(reversed);
 
             if (isPalindrome) {
                 resultLabel.setText("✅ Palindrome! Length: " + length);
-                resultLabel.setForeground(new Color(0, 128, 0));
+                resultLabel.setForeground(darkTheme[0] ? Color.WHITE : new Color(0, 128, 0));
             } else {
                 resultLabel.setText("❌ Not a palindrome. Length: " + length);
-                resultLabel.setForeground(Color.RED);
+                resultLabel.setForeground(darkTheme[0] ? Color.WHITE : Color.RED);
             }
 
-            // UC9: add entry to history
+            // UC9: add to history
             historyModel.addElement(original + " → " + (isPalindrome ? "Palindrome" : "Not Palindrome"));
         });
 
-        // 9️⃣ Add panel to frame
+        // 1️⃣1️⃣ Add panel to frame
         frame.add(panel);
         frame.setVisible(true);
     }
