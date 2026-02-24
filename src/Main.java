@@ -3,19 +3,19 @@ import java.awt.*;
 
 public class Main {
     public static void main(String[] args) {
-        // 1️⃣ Create the main window
+        // 1️⃣ Create main window
         JFrame frame = new JFrame("Palindrome Checker");
-        frame.setSize(400, 350);
+        frame.setSize(450, 400);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLocationRelativeTo(null); // Center window
+        frame.setLocationRelativeTo(null); // center
 
-        // 2️⃣ Main panel with padding
+        // 2️⃣ Main panel
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridwidth = GridBagConstraints.REMAINDER; // each component on a new line
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.insets = new Insets(10, 0, 10, 0); // vertical spacing
+        gbc.insets = new Insets(10, 0, 10, 0);
 
         // 3️⃣ Title label
         JLabel titleLabel = new JLabel("Palindrome Checker", SwingConstants.CENTER);
@@ -23,13 +23,13 @@ public class Main {
         panel.add(titleLabel, gbc);
 
         // 4️⃣ Input field
-        JTextField inputField = new JTextField(15);
+        JTextField inputField = new JTextField(20);
         inputField.setFont(new Font("Arial", Font.PLAIN, 16));
         panel.add(inputField, gbc);
 
         // 5️⃣ Check button
         JButton checkButton = new JButton("Check Text");
-        checkButton.setPreferredSize(new Dimension(100, 40));
+        checkButton.setPreferredSize(new Dimension(120, 40));
         panel.add(checkButton, gbc);
 
         // 6️⃣ Result label
@@ -37,7 +37,7 @@ public class Main {
         resultLabel.setFont(new Font("Arial", Font.ITALIC, 14));
         panel.add(resultLabel, gbc);
 
-        // 7️⃣ --- UC6 + UC7 BUTTON LOGIC ---
+        // 7️⃣ --- UC6 + UC7 + UC8 BUTTON LOGIC ---
         checkButton.addActionListener(e -> {
             String original = inputField.getText().trim();
 
@@ -47,23 +47,23 @@ public class Main {
                 return;
             }
 
-            // UC6: Remove spaces/punctuation, ignore case
+            // UC6 + UC8: remove spaces/punctuation, ignore case
             String cleanInput = original.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
             String reversed = new StringBuilder(cleanInput).reverse().toString();
 
-            // UC7: Count characters
-            int length = original.length(); // length including spaces/punctuation
+            // UC7: count characters including spaces/punctuation
+            int length = original.length();
 
             if (cleanInput.equals(reversed)) {
                 resultLabel.setText("✅ Palindrome! Length: " + length);
-                resultLabel.setForeground(new Color(0, 128, 0)); // Green
+                resultLabel.setForeground(new Color(0, 128, 0));
             } else {
                 resultLabel.setText("❌ Not a palindrome. Length: " + length);
                 resultLabel.setForeground(Color.RED);
             }
         });
 
-        // 8️⃣ Add panel to frame and show
+        // 8️⃣ Add panel to frame
         frame.add(panel);
         frame.setVisible(true);
     }
